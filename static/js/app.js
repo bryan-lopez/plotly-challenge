@@ -95,10 +95,24 @@ function createInfoTable(samples) {
   // Creates Demographic Info Table using samples
   samples = samples[0];
 
-  var demoBox = d3.select("#sample-metadata");
+  var demoList = d3.select("#sample-metadata").select("ul");
 
-  return true;
+  var demoInfo = [];
+  var demoEntries = Object.entries(samples);
 
+  for (let [key, value] of demoEntries) {
+    demoInfo.push(key + ": " + value);
+  }
+
+  var newInfo = demoList.selectAll("li").data(demoInfo);
+  console.log(newInfo);
+
+  newInfo.exit().remove();
+
+  newInfo.enter().append("li")
+    .text(d => d)
+    .merge(newInfo)
+      .text(d => d);
 };
 
 function createPage(sampleArr) {
